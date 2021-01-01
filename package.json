@@ -1,0 +1,33 @@
+{
+  "name": "12d-authenticate-manager",
+  "version": "1.0.0",
+  "description": "A web application for the management of 12d user access to macros.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server",
+    "dev": "nodemon server",
+    "test": "jest ./tests/unit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kelly-lin/12d-authenticate-manager.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kelly-lin/12d-authenticate-manager/issues"
+  },
+  "homepage": "https://github.com/kelly-lin/12d-authenticate-manager#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.9",
+    "react-bootstrap": "^1.4.0"
+  },
+  "devDependencies": {
+    "jest": "^26.6.0",
+    "nodemon": "^2.0.6"
+  }
+}
