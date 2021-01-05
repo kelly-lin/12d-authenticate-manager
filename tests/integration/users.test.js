@@ -11,7 +11,7 @@ let mongoServer;
 const opts = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useCreateIndexes: true
+  useCreateIndex: true
 };
 
 beforeAll(async () => {
@@ -48,5 +48,29 @@ afterAll(async () => {
 test('Get all users returns 2', async () => {
   const data = await request(app).get('/users');
   expect(data.body.length).toBe(2);
-  console.log(data);
+});
+
+test('Add user', async () => {
+  const newUser = {
+    username: 'John.Appleseed',
+    name: 'Appleseed,John',
+    email: 'john.appleseed@john.com',
+    pName: 'dt',
+    pCode: 'dt'
+  }
+
+  await request(app).post('/users/add')
+    .send(newUser)
+    .then(res => {
+      console.log(res.body);
+      // console.log(res.status);
+    })
+    .catch(err => console.log('Error!: ' + err));
+  
+  const numOfUsers = await User.find().countDocuments((err, count) => {
+    if(err) console.log(err);
+    return count;
+  });
+
+  expect(numOfUsers).toBe(3);
 });
