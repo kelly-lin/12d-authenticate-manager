@@ -4,7 +4,7 @@ const error = require('../services/error');
 function getUsers(req, res) {
   User.find()
     .then(users => res.json(users))
-    .catch(error.throw());
+    .catch(err => res.status(400).json('Error! ' + err));
 }
 module.exports.getUsers = getUsers;
 
