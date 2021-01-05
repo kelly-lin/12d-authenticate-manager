@@ -11,8 +11,8 @@ function addUser(req, res) {
   const username = req.body.username;
   const name = req.body.name;
   const email = req.body.email;
-  const projectApproved = req.body.pName;
-  const projectCode = req.body.pCode;
+  const projectApproved = req.body.projectApproved;
+  const projectCode = req.body.projectCode;
   
   const newUser = new User({
     username: username,
