@@ -61,10 +61,6 @@ test('Add user', async () => {
 
   await request(app).post('/users/add')
     .send(newUser)
-    .then(res => {
-      console.log(res.body);
-      // console.log(res.status);
-    })
     .catch(err => console.log('Error!: ' + err));
   
   const numOfUsers = await User.find().countDocuments((err, count) => {
