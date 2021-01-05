@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const userSchema = Schema({
@@ -9,14 +9,15 @@ const userSchema = Schema({
   },
   name: { type: String, required: true },
   email: { type: String, required: true },
-  accessLevel: { type: Number, required: true },
+  accessLevel: Number,
   projectApproved: { type: String, required: true },
+  projectCode: { type:String, required: true },
   lastActive: Date,
-  projectCode: String,
   dateRequested: Date,
   dateAuthenticated: Date,
   authenticatedBy: String,
-  expiryDate: Date
+  expiryDate: Date,
+  isPending: Boolean
 }, {
   timestamps: true
 });
