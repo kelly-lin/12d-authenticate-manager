@@ -26,6 +26,6 @@ function addUser(req, res) {
   
   newUser.save()
   .then(() => res.json('User added!'))
-  .catch(err => res.status(400).json(error.throw()));
+  .catch(err => res.status(400).json('Error! ' + err));
 }
 module.exports.addUser = addUser;
