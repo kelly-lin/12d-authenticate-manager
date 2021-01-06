@@ -28,3 +28,10 @@ function addUser(req, res) {
   .catch(err => res.status(400).json('Error! ' + err));
 }
 module.exports.addUser = addUser;
+
+function getPending(req, res) {
+  User.find({ isPending: true })
+    .then(users => res.json(users))
+    .catch(err => res.status(400).json('Error! ' + err));
+}
+module.exports.getPending = getPending;
