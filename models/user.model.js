@@ -17,7 +17,7 @@ const userSchema = Schema({
   dateAuthenticated: Date,
   authenticatedBy: String,
   expiryDate: Date,
-  isPending: Boolean
+  isPending: { type: Boolean, required: true }
 }, {
   timestamps: true
 });
