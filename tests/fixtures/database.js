@@ -7,7 +7,8 @@ const newUser1Object = {
   name: 'Lin,Kelly',
   email: 'Kelly.Lin@wsp.com',
   projectApproved: 'Appin Road',
-  projectCode: 'PS158157319'
+  projectCode: 'PS158157319',
+  isPending: true
 }
 
 const newUser2Object = {
@@ -15,7 +16,8 @@ const newUser2Object = {
   name: 'McNeil,Roisin',
   email: 'Roisin.McNeill@wsp.com',
   projectApproved: 'PLR',
-  projectCode: 'PS158157315'
+  projectCode: 'PS158157315',
+  isPending: true
 }
 
 const newUser3Object = {
@@ -23,7 +25,8 @@ const newUser3Object = {
   name: 'Appleseed,John',
   email: 'john.appleseed@john.com',
   projectApproved: 'Gawler Electrification Project',
-  projectCode: 'PS2154125'
+  projectCode: 'PS2154125',
+  isPending: true
 }
 
 const users = {
