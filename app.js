@@ -10,4 +10,7 @@ app.use(express.json());
 const usersRouter = require('./routes/users');
 app.use('/users', usersRouter);
 
+const pendingRouter = require('./routes/pending');
+app.use('/pending', pendingRouter);
+
 module.exports = app;
