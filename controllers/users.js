@@ -29,9 +29,9 @@ function addUser(req, res) {
 }
 module.exports.addUser = addUser;
 
-function getPending(req, res) {
+function getPendingUsers(req, res) {
   User.find({ isPending: true })
     .then(users => res.json(users))
     .catch(err => res.status(400).json('Error! ' + err));
 }
-module.exports.getPending = getPending;
+module.exports.getPendingUsers = getPendingUsers;
