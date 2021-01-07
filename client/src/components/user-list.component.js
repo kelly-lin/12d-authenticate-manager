@@ -1,24 +1,7 @@
 import React, { Component } from 'react';
 import Table from 'react-bootstrap/Table';
 import axios from 'axios';
-
-const getUserStatus = user => {
-  const accessLevels = {
-    admin: { code: 0, text: 'Admin'},
-    restricted: { code: 1, text: 'Restricted' },
-    revoked: { code: 2, text: 'Revoked' }
-  }
-
-  if(user.accessLevel === accessLevels.admin.code) {
-    return accessLevels.admin.text;
-  } else if(user.accessLevel === accessLevels.restricted.code) {
-    return accessLevels.restricted.text;
-  } else if(user.accessLevel === accessLevels.revoked.code) {
-    return accessLevels.revoked.text;
-  }
-  
-  return "Error! Code undefined";
-}
+import getUserStatus from '../services/users';
 
 const User = props => {
  return (
