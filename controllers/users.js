@@ -1,7 +1,7 @@
 let User = require('../models/user.model');
 
 function getUsers(req, res) {
-  User.find()
+  User.find({ isPending: false })
     .then(users => res.json(users))
     .catch(err => res.status(400).json('Error! ' + err));
 }
