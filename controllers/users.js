@@ -35,3 +35,35 @@ function getPendingUsers(req, res) {
     .catch(err => res.status(400).json('Error! ' + err));
 }
 module.exports.getPendingUsers = getPendingUsers;
+
+function updateUser(req, res) {
+  User.findById(req.params.id)
+    .then(user => {
+      user.email =
+        req.body.email ?? req.body.email;
+        
+      user.accessLevel =
+        req.body.accessLevel ?? user.accessLevel;
+        
+      user.lastActive =
+        req.body.lastActive ?? user.lastActive;
+        
+      user.dateAuthenticated =
+        req.body.dateAuthenticated ?? user.dateAuthenticated;
+        
+      user.authenticatedBy =
+        req.body.authenticatedBy ?? user.authenticatedBy;
+        
+      user.expiryDate =
+        req.body.expiryDate ?? user.expiryDate;
+        
+      user.isPending =
+        req.body.isPending ?? user.isPending;
+      
+      user.save()
+        .then(() => res.json("User updated!"))
+        .catch(err => res.status(400).json("Error: " + err));
+    })
+    .catch(err => res.status(400).json("Error: " + err));
+}
+module.exports.updateUser = updateUser;
