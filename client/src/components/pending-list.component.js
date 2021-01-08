@@ -15,7 +15,9 @@ const ActionButtons = props => {
   
   const handleDeny = () => {
     props.user.accessLevel = accessLevels.denied.code;
-    axios.post('/users/update/' + props.user._id, props.user)
+    props.user.isPending = false;
+    axios.post('/users/update/' + props.user._id, props.user);
+    props.handleHideUser(props.user._id);
   }
 
   return (
@@ -45,7 +47,7 @@ const ActionButtons = props => {
           <Modal.Title>Approve user</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <ApproveUserForm user={ props.user } />
+          <ApproveUserForm user={ props.user } handleHideUser={ props.handleHideUser }/>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={ handleClose }>
@@ -53,8 +55,7 @@ const ActionButtons = props => {
           </Button>
           <Button type="submit" 
             form="user-permissions-form" 
-            variant="primary" 
-            onClick={ () => props.handleHideUser(props.user._id) }
+            variant="primary"
           >
             Approve
           </Button>
