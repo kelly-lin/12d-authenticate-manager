@@ -6,7 +6,10 @@ import './App.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import NavigationBar from './components/navbar.component';
-import Userlist from './components/userlist.component';
+import UserList from './components/user-list.component';
+import LogList from './components/log-list.component';
+import PendingList from './components/pending-list.component';
+import Metrics from './components/metrics.component';
 
 function App(){
   return(
@@ -15,7 +18,16 @@ function App(){
         <NavigationBar />
         <br />
         <Route path="/userlist">
-          <Userlist />
+          <UserList />
+        </Route>
+        <Route path="/pending">
+          <PendingList />
+        </Route>
+        <Route path="/log">
+          <LogList />
+        </Route>
+        <Route path="/metrics">
+          {/* <Metrics /> */}
         </Route>
       </div>
     </Router>

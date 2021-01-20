@@ -4,6 +4,23 @@ const accessLevels = {
   denied: { code: 2, text: 'Denied' }
 }
 
+const status = {
+  
+}
+
+const getUserAccessLevel = user => {
+  if(user.accessLevel === accessLevels.admin.code)
+    return accessLevels.admin.text;
+  
+  if(user.accessLevel === accessLevels.restricted.code)
+    return accessLevels.restricted.text;
+  
+  if(user.accessLevel === accessLevels.denied.code)
+    return accessLevels.denied.text;
+
+  return "Error! Code undefined";
+}
+
 const getUserStatus = user => {
   if(user.accessLevel === accessLevels.admin.code)
     return accessLevels.admin.text;
@@ -17,4 +34,4 @@ const getUserStatus = user => {
   return "Error! Code undefined";
 }
 
-export { getUserStatus as default, accessLevels };
+export { getUserAccessLevel as default, getUserStatus, accessLevels };

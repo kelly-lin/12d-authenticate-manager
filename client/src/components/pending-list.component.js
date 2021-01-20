@@ -75,7 +75,7 @@ const UserRow = props => {
     <tr>
       <td>{ props.user.username }</td>
       <td>{ props.user.name }</td>
-      <td>{ new Intl.DateTimeFormat('en-au',dateOptions).format(new Date(props.user.createdAt)) }</td>
+      <td>{ new Intl.DateTimeFormat('en-au', dateOptions).format(new Date(props.user.createdAt)) }</td>
       <td><ActionButtons user={ props.user } handleHideUser={ props.handleHideUser } /></td>
     </tr>
   )

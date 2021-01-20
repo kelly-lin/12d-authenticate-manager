@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import Table from 'react-bootstrap/Table';
 import axios from 'axios';
-import getUserStatus from '../services/users';
+import getUserAccessLevel from '../services/users';
 
 const User = props => {
  return (
   <tr>
     <td>{ props.user.username }</td>
     <td>{ props.user.name }</td>
-    <td>{ getUserStatus(props.user) }</td>
     <td>31/12/2020</td>
-    <td>Approved</td>
+    <td>{ getUserAccessLevel(props.user) }</td>
   </tr>
  );
 }
@@ -43,9 +42,8 @@ export default class UserList extends Component {
           <tr>
             <th>Username</th>
             <th>Name</th>
-            <th>Access level</th>
             <th>Last active</th>
-            <th>Status</th>
+            <th>Access level</th>
           </tr>
         </thead>
         <tbody>
