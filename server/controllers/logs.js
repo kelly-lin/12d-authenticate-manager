@@ -9,3 +9,15 @@ function getLogs(req, res) {
     .catch(err => res.status(400).json('Error! ' + err));
 }
 module.exports.getLogs = getLogs;
+
+function getLogPage(req, res) {
+  const options = {
+    page: req.params.page,
+    limit: 10,
+  }
+
+  Log.paginate({}, options, (err, result) => {
+    res.json(result);
+  });
+}
+module.exports.getLogPage = getLogPage;

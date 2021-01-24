@@ -9,7 +9,7 @@ import NavigationBar from './components/navbar.component';
 import UserList from './components/user-list.component';
 import LogList from './components/log-list.component';
 import PendingList from './components/pending-list.component';
-import Metrics from './components/metrics.component';
+// import Metrics from './components/metrics.component';
 
 function App(){
   return(
@@ -23,7 +23,7 @@ function App(){
         <Route path="/pending">
           <PendingList />
         </Route>
-        <Route path="/log">
+        <Route path="/log" perPage={10}>
           <LogList />
         </Route>
         <Route path="/metrics">
