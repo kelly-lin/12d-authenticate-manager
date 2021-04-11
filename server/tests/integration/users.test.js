@@ -19,8 +19,15 @@ afterEach(async () => {
 })
 
 test('Get all users returns 2', async () => {
-  await new User(db.users.user1).save();
-  await new User(db.users.user2).save();
+  let user1 = db.users.user1();
+  user1['isPending'] = false;
+
+  let user2 = db.users.user2();
+  user2['isPending'] = false;
+
+  await new User(user1).save();
+  await new User(user2).save();
+
   const data = await request(app).get('/users');
 
   expect(data.body.length).toBe(2);
@@ -35,7 +42,7 @@ test('Add user', async () => {
   expect(numOfUsersStart).toBe(0);
 
   await request(app).post('/users/add')
-    .send(db.users.user1)
+    .send(db.users.user1())
     .catch(err => console.log('Error!: ' + err));
   
   const numOfUsers = await User.find().countDocuments((err, count) => {
@@ -47,9 +54,10 @@ test('Add user', async () => {
 });
 
 test('add pending', async () => {
-  let users = await request(app).get('/pending').then(result => result.body);
+  let users = await request(app).get('/users/pending').then(result => result.body);
   expect(users.length).toBe(0);
-  await new User(db.users.user1).save();
-  users = await request(app).get('/pending').then(result => result.body);
+
+  await new User(db.users.user1()).save();
+  users = await request(app).get('/users/pending').then(result => result.body);
   expect(users.length).toBe(1);
 });
