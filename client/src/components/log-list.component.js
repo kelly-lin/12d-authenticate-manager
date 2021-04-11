@@ -1,54 +1,40 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Table from 'react-bootstrap/Table';
-import LoaderSpinner from './loader-spinner.component';
-import ReactPaginate from 'react-paginate';
-
-const LogLine = props => {
-  const accessDate = new Date(props.log.accessDate);
-
-  return (
-    <tr>
-      <td>{props.log.username}</td>
-      <td>{props.log.name}</td>
-      <td>{props.log.projectName}</td>
-      <td>{props.log.macroName}</td>
-      <td>{new Intl.DateTimeFormat('en-au').format(accessDate)}</td>
-      <td>{accessDate.toLocaleTimeString()}</td>
-    </tr>
-  )
-}
+import Logs from './logs.component';
 
 export default class LogList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       logs: [],
-      page: 1
+      offset: 0,
+      pageCount: 0,
+      isLoaded: false
     }
 
-    this.LogLines = this.LogLines.bind(this);
     this.loadLogsFromServer = this.loadLogsFromServer.bind(this);
   }
 
   loadLogsFromServer() {
-    axios.get('logs/page/' + this.state.page)
+    const pageNum = this.state.offset + 1;
+    axios.get('logs/page/' + pageNum)
       .then(res => {
         const logs = res.data.docs;
-        const pageCount = res.data.totalDocs;
+        const pageCount = res.data.totalPages;
 
         this.setState({
           logs: logs,
-          pageCount: pageCount
+          pageCount: pageCount,
+          isLoaded: true
         });
       });
   }
 
   handlePageClick = data => {
     console.log(data);
-    let selected = data.selected;
+    let offset = data.selected;
 
-    this.setState({ page: selected }, () => {
+    this.setState({ offset: offset }, () => {
       this.loadLogsFromServer();
     });
   }
@@ -57,52 +43,16 @@ export default class LogList extends Component {
     this.loadLogsFromServer();
   }
 
-  LogLines() {
-    if(this.state.logs.length === 0){
-      return (
-        <div style={{textAlign: "center"}}>
-          <LoaderSpinner />
-        </div>
-      )
-    } 
-
-    return this.state.logs.map(log => {
-      return <LogLine log={log} />
-    })
-  }
-
   render() {
     return (
       <div>
-        <Table striped bordered hover variant="dark">
-            <thead>
-              <tr>
-                <th>Username</th>
-                <th>Name</th>
-                <th>Project name</th>
-                <th>Macro name</th>
-                <th>Access date</th>
-                <th>Access time</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.LogLines()}
-            </tbody>
-        </Table>
-        <ReactPaginate
-          previousLabel={'previous'}
-          nextLabel={'next'}
-          breakLabel={'...'}
-          breakClassName={'break-me'}
+        <Logs 
+          logs={this.state.logs} 
           pageCount={this.state.pageCount}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={this.handlePageClick}
-          containerClassName={'pagination'}
-          subContainerClassName={'pages pagination'}
-          activeClassName={'active'}
+          handlePageClick={this.handlePageClick}
+          isLoaded={this.state.isLoaded}
         />
       </div>
-    );
+    )
   }
 }

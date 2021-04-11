@@ -4,8 +4,14 @@ const accessLevels = {
   denied: { code: 2, text: 'Denied' }
 }
 
-const status = {
-  
+function UserAccessLevelOptions() {
+  return (
+    <>
+    <option>{accessLevels.admin.text}</option>
+    <option>{accessLevels.restricted.text}</option>
+    <option>{accessLevels.denied.text}</option>
+    </>
+  )
 }
 
 const getUserAccessLevel = user => {
@@ -34,4 +40,9 @@ const getUserStatus = user => {
   return "Error! Code undefined";
 }
 
-export { getUserAccessLevel as default, getUserStatus, accessLevels };
+export { 
+  getUserAccessLevel as default, 
+  getUserStatus, 
+  accessLevels,
+  UserAccessLevelOptions
+};

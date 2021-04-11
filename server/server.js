@@ -5,13 +5,13 @@ require('dotenv').config();
 // Connect to mongodb
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useUnifiedTopology: true
-});
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true
+  })
+  .catch(err => console.log(err));
 
-const connection = mongoose.connection;
-connection.once('open', () => {
+mongoose.connection.once('open', () => {
   console.log('MongoDB connection established!');
 });
 

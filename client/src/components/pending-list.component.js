@@ -6,8 +6,9 @@ import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import Modal from 'react-bootstrap/Modal';
 import ApproveUserForm from './approve-user-form.component';
+import LoaderSpinner from './loader-spinner.component';
 
-const ActionButtons = props => {
+function ActionButtons(props) {
   const [show, setShow] = useState(false);
   
   const handleClose = () => setShow(false);
@@ -65,7 +66,7 @@ const ActionButtons = props => {
   )
 }
 
-const UserRow = props => {
+function PendingUserRow(props) {
   const dateOptions = {
     dateStyle: 'short',
     timeStyle: 'short'
@@ -75,30 +76,79 @@ const UserRow = props => {
     <tr>
       <td>{ props.user.username }</td>
       <td>{ props.user.name }</td>
-      <td>{ new Intl.DateTimeFormat('en-au', dateOptions).format(new Date(props.user.createdAt)) }</td>
+      <td>
+        {
+          new Intl
+                .DateTimeFormat('en-au', dateOptions)
+                .format(new Date(props.user.createdAt))
+        }
+      </td>
       <td><ActionButtons user={ props.user } handleHideUser={ props.handleHideUser } /></td>
     </tr>
   )
 }
 
-class UserList extends Component {
+function PendingUsers(props) {
+  return props.users.map(user => {
+    return (
+      props.usersVisible[user._id] ? 
+        <PendingUserRow user={user} handleHideUser={props.handleHideUser}/> : null
+    )
+  });
+}
+
+function UserListTable(props) {
+  if(props.isLoading) {
+    return <LoaderSpinner />
+  } else if(props.users.length === 0 && !props.isLoading) {
+    return <div>No users pending!</div>
+  } else {
+
+    return (
+      <Table striped bordered hover variant="dark">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Name</th>
+            <th>Date requested</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <PendingUsers 
+            handleHideUser={props.handleHideUser} 
+            users={props.users} 
+            usersVisible={props.usersVisible}
+          />
+        </tbody>
+      </Table>
+    )
+  }
+}
+
+export default class UserList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       users: [] ,
-      usersVisible: {} 
+      usersVisible: {},
+      isLoading: true
     }
 
     const getUsers = async () => {
       await axios.get('/users/pending')
               .then(res => {
-                this.setState({ users: res.data });
+                this.setState({ 
+                  users: res.data, 
+                  isLoading: false 
+                });
               });
-
+      
       let usersVisible = {};
       this.state.users.forEach(user => {
         usersVisible[user._id] = true;
       });
+
       await this.setState({ usersVisible: usersVisible });
     }
 
@@ -107,7 +157,7 @@ class UserList extends Component {
     this.handleHideUser = this.handleHideUser.bind(this);
   }
 
-  handleHideUser = userId => {
+  handleHideUser(userId) {
     let usersVisible = this.state.usersVisible;
     usersVisible[userId] = false;
     this.setState({ usersVisible:  usersVisible });
@@ -115,32 +165,12 @@ class UserList extends Component {
 
   render() {
     return (
-      this.state.users.map(user => {
-        return (
-          this.state.usersVisible[user._id] ? 
-            <UserRow user={ user } handleHideUser={ this.handleHideUser }/> : null
-        )
-      })
+      <UserListTable 
+        users={this.state.users} 
+        usersVisible={this.state.usersVisible}
+        handleHideUser={this.handleHideUser}
+        isLoading={this.state.isLoading}
+      />
     )
   }
 }
-
-const PendingList = props => {
-  return (
-    <Table striped bordered hover variant="dark">
-      <thead>
-        <tr>
-          <th>Username</th>
-          <th>Name</th>
-          <th>Date requested</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <UserList />
-      </tbody>
-    </Table>
-  )
-}
-
-export default PendingList;

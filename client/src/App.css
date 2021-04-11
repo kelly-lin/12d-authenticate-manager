@@ -36,3 +36,29 @@
     transform: rotate(360deg);
   }
 }
+
+body {
+  background-color: #282c34;
+}
+
+.pagination-container {
+  display: table;
+  margin: auto;
+}
+
+.pagination {
+  color: white;
+}
+
+.pagination li {
+  padding: 5px 12px;
+  margin: 0 5px;
+}
+
+.loader-spinner {
+  display: block;
+  color: white;
+  /* width: 50px; */
+  margin: 25px auto;
+  text-align: center;
+}

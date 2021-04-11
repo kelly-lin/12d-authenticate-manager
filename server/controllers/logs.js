@@ -1,6 +1,6 @@
 const Log = require('../models/log.model');
 
-function getLogs(req, res) {
+module.exports.getLogs = (req, res) => {
   Log.find()
     .sort({ accessDate: -1 })
     .then(logs => {
@@ -8,11 +8,11 @@ function getLogs(req, res) {
     })
     .catch(err => res.status(400).json('Error! ' + err));
 }
-module.exports.getLogs = getLogs;
 
-function getLogPage(req, res) {
+module.exports.getLogPage = (req, res) => {
   const options = {
     page: req.params.page,
+    sort: { accessDate: -1 },
     limit: 10,
   }
 
@@ -20,4 +20,16 @@ function getLogPage(req, res) {
     res.json(result);
   });
 }
-module.exports.getLogPage = getLogPage;
+
+module.exports.getUserLogs = (req, res) => {
+  const username = req.params.username;
+  const options = {
+    page: req.params.page,
+    sort: { accessDate: -1 },
+    limit: 10,
+  }
+
+  Log.paginate({ username: username }, options, (err, result) => {
+    res.json(result);
+  })
+}

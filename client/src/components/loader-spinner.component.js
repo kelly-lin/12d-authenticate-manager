@@ -5,7 +5,10 @@ import Loader from 'react-loader-spinner';
 export default class LoaderSpinner extends Component {
   render() {
     return(
-      <Loader type="Oval" color="#00BFFF" height={ 25 } width={ 25 } />
+      <>
+        <div className={'loader-spinner'}>Loading...</div>
+        <Loader className={'loader-spinner'} type="Oval" color="#00BFFF" height={ 25 } width={ 25 } />
+      </>
     );
   }
 }
